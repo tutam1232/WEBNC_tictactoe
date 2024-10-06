@@ -63,12 +63,12 @@ function Board({ xIsNext, squares, onPlay, numrow = 3 }) {
 }
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isAscending, setIsAscending] = useState(true);
   const [movesHistory, setMovesHistory] = useState([null]);
   const [numrow, setNumrow] = useState(-1);
   const [inputRow, setInputRow] = useState(-1);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -127,9 +127,21 @@ export default function Game() {
 
   return numrow <= 2 ? (
     <>
-      <label>Enter n (nxn tic-tac-toe board, n is greater or equal to 3): </label>
-      <input type="number" onChange={(e) => setInputRow(e.target.value)}></input>
-      <button onClick={() => setNumrow(parseInt(inputRow))}>OK</button>
+      <label>
+        Enter n (nxn tic-tac-toe board, n is greater or equal to 3):{" "}
+      </label>
+      <input
+        type="number"
+        onChange={(e) => setInputRow(e.target.value)}
+      ></input>
+      <button
+        onClick={() => {
+          setNumrow(parseInt(inputRow));
+          setHistory([Array(parseInt(inputRow) ** 2).fill(null)]);
+        }}
+      >
+        OK
+      </button>
     </>
   ) : (
     <div className="game" style={{ display: "flex" }}>
